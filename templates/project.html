@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('index') }}">← Projetos</a>
+<h1><span class="key">{{ project.key }}</span> {{ project.name }}</h1>
+<p class="muted">{{ project.description or '' }}</p>
+<div class="row">
+    <a class="btn ghost" href="{{ url_for('project_edit', project_id=project.id) }}">Editar</a>
+    <form method="post" action="{{ url_for('project_delete', project_id=project.id) }}"
+    onsubmit="return confirm('Excluir projeto e TODAS as issues?')">
+        <button class="btn danger">Excluir</button>
+    </form>
+</div>
+{% endblock %}

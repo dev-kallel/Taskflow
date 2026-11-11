@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Projetos</h1>
-<ul>
-{% for p in projetos %}
-<li>{{ p }}</li>
-{% endfor %}
-</ul>
+<div class="row between">
+    <h1>Projetos <span class="tag sql">SQL</span></h1>
+    <a class="btn" href="{{ url_for('project_new') }}">+ Novo projeto</a>
+</div>
+{% if not projects %}
+    <p class="muted">Nenhum projeto ainda.</p>
+{% endif %}
+<div class="grid">
+    {% for p in projects %}
+    <a class="card" href="{{ url_for('project_detail', project_id=p.id) }}">
+        <div class="key">{{ p.key }}</div>
+        <h3>{{ p.name }}</h3>
+        <p class="muted">{{ p.description or '' }}</p>
+        {% set pct = ((p.done or 0) / p.total * 100) | round | int if p.total else 0 %}
+        <div class="bar"><div style="width: {{ pct }}%"></div></div>
+            <small>{{ p.done or 0 }} de {{ p.total }} concluídas ({{ pct }}%)</small>
+    </a>
+    {% endfor %}
+</div>
 {% endblock %}

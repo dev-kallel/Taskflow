@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ 'Editar projeto' if project else 'Novo projeto' }}</h1>
+<form method="post" class="form">
+    <label>Sigla
+        <input name="key" maxlength="6" value="{{ project.key if project else '' }}"
+        {% if project %}disabled{% else %}required{% endif %} placeholder="APP">
+    </label>
+    <label>Nome
+        <input name="name" required value="{{ project.name if project else '' }}">
+    </label>
+    <label>Descrição
+        <textarea name="description" rows="3">{{ project.description if project else '' }}</textarea>
+    </label>
+    <div class="row">
+        <button class="btn">Salvar</button>
+        <a href="{{ url_for('project_detail', project_id=project.id) if project else url_for('index') }}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}
